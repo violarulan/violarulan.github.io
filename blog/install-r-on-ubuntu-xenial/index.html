@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="chrome=1">
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="referrer" content="no-referrer">
+<meta name="author" content="Arthur Dent">
+<meta name="description" content="R 不在 Ubuntu 的官方源中，通过包管理器安装需要添加源(CRAN)
+ CRAN is a network of ftp and web servers around the world that store identical, up-to-date, versions of code and documentation for R. Please use the CRAN mirror nearest to you to minimize network load. CRAN是世界范围内保存并分发统一、最新版本的 R 代码和文档的一个网络。请使用距离你最近的 CRAN 镜像。
+ 在 https://cran.r-project.org/mirrors.html 可以查看所有 CRAN Mirror
+这里以清华 TUNA 源 (https://mirrors.tuna.tsinghua.edu.cn/CRAN/) 为例
+添加源 这里以 16.04 Xenial 为例，可自行替换为 wily/trusty/precise
+deb http://mirrors.ustc.edu.cn/CRAN/bin/linux/ubuntu/ xenial/  添加 key CRAN 存储的的包经由 KeyID E084DAB9 签名验证，需要添加 Key">
+
+<meta property="og:title" content="在 Ubuntu 上通过 APT 安装 R" />
+<meta property="og:description" content="R 不在 Ubuntu 的官方源中，通过包管理器安装需要添加源(CRAN)
+ CRAN is a network of ftp and web servers around the world that store identical, up-to-date, versions of code and documentation for R. Please use the CRAN mirror nearest to you to minimize network load. CRAN是世界范围内保存并分发统一、最新版本的 R 代码和文档的一个网络。请使用距离你最近的 CRAN 镜像。
+ 在 https://cran.r-project.org/mirrors.html 可以查看所有 CRAN Mirror
+这里以清华 TUNA 源 (https://mirrors.tuna.tsinghua.edu.cn/CRAN/) 为例
+添加源 这里以 16.04 Xenial 为例，可自行替换为 wily/trusty/precise
+deb http://mirrors.ustc.edu.cn/CRAN/bin/linux/ubuntu/ xenial/  添加 key CRAN 存储的的包经由 KeyID E084DAB9 签名验证，需要添加 Key" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://violarulan.github.io/blog/install-r-on-ubuntu-xenial/" />
+
+
+
+<meta property="article:published_time" content="2016-11-05T09:08:51&#43;08:00"/>
+<meta property="article:modified_time" content="2016-11-05T09:08:51&#43;08:00"/>
+
+
+
+
+
+
+
+
+
+
+
+
+<title>
+
+
+     在 Ubuntu 上通过 APT 安装 R 
+
+</title>
+<link rel="canonical" href="https://violarulan.github.io/blog/install-r-on-ubuntu-xenial/">
+
+
+
+
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/styles/default.min.css">
+
+
+
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,700|Ubuntu+Mono:400,400i,700,700i|Raleway:500">
+
+
+
+    
+    <link rel="stylesheet" href="https://violarulan.github.io/css/reset.css?t=2017-07-22%2021%3a35%3a21.886736%20%2b0800%20CST">
+    <link rel="stylesheet" href="https://violarulan.github.io/css/pygments.css?t=2017-07-22%2021%3a35%3a21.886736%20%2b0800%20CST">
+    <link rel="stylesheet" href="https://violarulan.github.io/css/main.css?t=2017-07-22%2021%3a35%3a21.886736%20%2b0800%20CST">
+    
+        <link rel="stylesheet" href="https://violarulan.github.io/css/override.css?t=2017-07-22%2021%3a35%3a21.886736%20%2b0800%20CST">
+    
+
+
+
+
+<link rel="shortcut icon"
+
+    href="https://violarulan.github.io/img/leaf.ico"
+
+>
+
+
+
+
+</head>
+
+
+<body lang="cn">
+
+<section class="header">
+    <div class="container">
+        <div class="content">
+            
+                
+                
+                
+                
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        
+                    
+                
+                    
+                        
+                    
+                
+                    
+                        
+                    
+                
+                    
+                
+                    
+                
+                
+                <a href="https://violarulan.github.io/"><img class="avatar" src="https://violarulan.github.io/img/profile.png" srcset="https://violarulan.github.io/img/profile.png 1x,https://violarulan.github.io/img/profile-2x.png 2x,https://violarulan.github.io/img/profile-3x.png 3x,https://violarulan.github.io/img/profile-4x.png 4x"></a>
+            
+            <a href="https://violarulan.github.io/"><div class="name">Arthur Dent</div></a>
+            
+            <nav>
+                <ul>
+                    
+                        <li class="nav-blog"><a href="https://violarulan.github.io/blog/"><span>Blog</span></a></li>
+                    
+                        <li class="nav-about"><a href="https://violarulan.github.io/about/"><span>About</span></a></li>
+                    
+                        <li class="nav-links"><a href="https://violarulan.github.io/links/"><span>Links</span></a></li>
+                    
+                </ul>
+            </nav>
+        </div>
+    </div>
+</section>
+
+<section class="icons">
+    <div class="container">
+        <div class="content">
+
+        
+            <a href="//github.com/violarulan" target="_blank" rel="noopener"><img class="icon" src="https://violarulan.github.io/img/github.svg" alt="github" /></a>
+        
+
+        
+            <a href="//twitter.com/violarulan" target="_blank" rel="noopener"><img class="icon" src="https://violarulan.github.io/img/twitter.svg" alt="twitter" /></a>
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+            <a href="https://violarulan.github.io/index.xml"><img class="icon" src="https://violarulan.github.io/img/rss.svg" alt="rss" /></a>
+        
+        
+        </div>
+    </div>
+</section>
+
+
+<section class="main post non-narrow zero-top-spacing">
+    <div class="container">
+        <div class="content">
+            <div class="front-matter">
+                <div class="title-container">
+                    <div class="page-heading">
+
+    在 Ubuntu 上通过 APT 安装 R
+
+</div>
+
+                    <div class="initials"><a href="https://violarulan.github.io/">ad</a></div>
+                </div>
+                <div class="meta">
+                    
+                    <div class="date" title='Sat Nov 5 2016 09:08:51 CST'>Nov 5, 2016</div>
+                    
+                    
+		    <div class="reading-time"><div class="middot"></div>已阅读了一分钟</div>
+                    
+                </div>
+            </div>
+            <div class="markdown">
+                
+
+<p>R 不在 Ubuntu 的官方源中，通过包管理器安装需要添加源(CRAN)</p>
+
+<blockquote>
+<p>CRAN is a network of ftp and web servers around the world that store identical, up-to-date, versions of code and documentation for R. Please use the CRAN mirror nearest to you to minimize network load.
+CRAN是世界范围内保存并分发统一、最新版本的 R 代码和文档的一个网络。请使用距离你最近的 CRAN 镜像。</p>
+</blockquote>
+
+<p>在 <a href="https://cran.r-project.org/mirrors.html">https://cran.r-project.org/mirrors.html</a> 可以查看所有 CRAN Mirror</p>
+
+<p>这里以清华 TUNA 源 (<a href="https://mirrors.tuna.tsinghua.edu.cn/CRAN/">https://mirrors.tuna.tsinghua.edu.cn/CRAN/</a>) 为例</p>
+
+<h4 id="添加源">添加源</h4>
+
+<p>这里以 16.04 Xenial 为例，可自行替换为 wily/trusty/precise</p>
+
+<pre><code class="language-text">deb http://mirrors.ustc.edu.cn/CRAN/bin/linux/ubuntu/ xenial/
+</code></pre>
+
+<h4 id="添加-key">添加 key</h4>
+
+<p>CRAN 存储的的包经由 KeyID E084DAB9 签名验证，需要添加 Key</p>
+
+<pre><code class="language-text">sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E084DAB9
+</code></pre>
+
+<h4 id="更新">更新</h4>
+
+<pre><code class="language-text">sudo apt update
+</code></pre>
+
+<h5 id="安装-r-基本版">安装 R 基本版</h5>
+
+<pre><code class="language-text">sudo apt install r-base
+</code></pre>
+
+<h5 id="安装-r-开发版-可编译r包">安装 R 开发版（可编译R包）</h5>
+
+<pre><code class="language-text">sudo apt install r-base-dev
+</code></pre>
+
+                <br>
+		<p><a href="https://violarulan.github.io/blog/">回到文章列表</a></p>
+            </div>
+            <br>
+            <div class="disqus">
+                <div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "cocoaexamplesite" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-123-45', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='//www.google-analytics.com/analytics.js'></script>
+
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/highlight.min.js"></script>
+  
+
+  <script type="text/javascript">
+    hljs.initHighlightingOnLoad();
+  </script>
+
+
+
+
+</body>
+</html>
+

@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Blog on Arthur Dent</title>
+    <link>https://violarulan.github.io/blog/</link>
+    <description>Recent content in Blog on Arthur Dent</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Sun, 21 May 2017 18:10:58 +0800</lastBuildDate>
+    
+	<atom:link href="https://violarulan.github.io/blog/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>(自译) 尼尔机械纪元：2 号 B 型的制作过程</title>
+      <link>https://violarulan.github.io/blog/the-making-of-2b-nierautomata/</link>
+      <pubDate>Sun, 21 May 2017 18:10:58 +0800</pubDate>
+      
+      <guid>https://violarulan.github.io/blog/the-making-of-2b-nierautomata/</guid>
+      <description>大家好！
+我是 Hito Matsudaira，《尼尔: 机械纪元》的角色建模师。
+在你想起角色建模师时有没有什么特殊的名人出现在你的脑海中？对我来说并没有想起任何人——角色建模师近日来并没有出现在公众视线下！能有这样的机会对我来说是很幸运的，在这里我有机会来向你们讲述我心中的想法以及如何使用一些制作中的人物草稿建立角色模型。
+角色建模的过程并非是简单的从 2D 画作转换为 3D 模型。
+创建模型
+一般而言，建模过程遵循以下步骤
+ 使用粗模(rough model)预测整体形式和其最终形象 建立高质量的精确角色模型 将建立的角色模型构建成可被游戏引擎驱动的模型  我最初基于从角色设计师 Akihiko Yoshida (吉田 明彦) 那里收到的粗略的人物草稿开始建立粗模。
+Yoshida 先生的品味对我来说很清楚（从我在上面图像隐藏的部分中我可以看出——请放心，那些并不是一些怪异的什么东西，只是一些我不能向你们展示的参考图片）。凭借它们，我即使不和他沟通交流就能知道他内心的想法，我很喜欢这样。
+这就是我创建的粗模，我来到《尼尔: 机械纪元》团队做的第一项工作就是完成它。大概花了我一到两周时间完成。
+完成它后我把它拿给了总监 Yoko Taro (横尾 太郎) 看，他说：“太棒了！”。建立这个模型我参考了许多东西，比如角色设计 Yoshida 先生参与过的许多游戏（最终幻想 12 的建模实在是太棒了..）
+当我们讨论粗模时，你可能觉得他会非常粗略，但实际上它花费了我大量精力。
+有这个粗略的轮廓就可以大功告成了吗？建立它是否不需要让动作师花费太多精力调整角色动作？它需要多少根骨架？我们要如何操作骨架使它能够移动？
+我们使用 2B 的人物模型来给整个游戏项目测试跑分(Benchmark)。所以我需要考虑各种基础参数，如身体比例和造型、设计着色器甚至量产(译注: 指周边产物)时的花销，这些工作全部在建立粗模时完成。
+当今成品模型难以还原成工程项目，所以我也有必要在设计数据时考虑到它可能在将来的项目中使用时产生的影响，我是一个美术家，不过我动了很多脑筋思考这些问题。
+接下来是最有趣的部分：在高质量模型上绘制细节 在电脑上建模就像捏泥一样，我专注于在人物模型各处捏来捏去，做这个时我没有想其他任何东西，真的。
+最后我将它构建为游戏人物模型 简而言之，这个步骤即包括了在多边形(Polygon)上粘贴贴图，然而随着终端设备的更新换代，建一个人物模型所需要的多边形数和图片数也大幅增加。
+PlayStation 2 平台上的多边形数大约是几千，并且只需要一到两种贴图材质，但是在 PlayStation 4 平台，多边形数量大约需要 100,000 个，图片则需要 8 种不同类型的贴图，如果细节层次要求更高还可以继续增加数量…
+将贴图附加在白模(raw polygon)上的图片过程
+白模 → 附加从高质量模型中提取出的表面轮廓信息的图像 → 使用不同类型的贴图指定纹理 → 使用贴图制定颜色 → 用最后一点创造力给模型带来质感!</description>
+    </item>
+    
+    <item>
+      <title>强制更新 EVE 国服资源服务器缓存</title>
+      <link>https://violarulan.github.io/blog/force-tiancity-cache-server-refresh/</link>
+      <pubDate>Mon, 10 Apr 2017 00:33:51 +0800</pubDate>
+      
+      <guid>https://violarulan.github.io/blog/force-tiancity-cache-server-refresh/</guid>
+      <description>众所周知，EVE 的 DoD 功能可以在安装游戏时只下载启动器，在游戏时从服务器下载所需要的资源文件。世界服的资源服务器的地址是 res.eveonline.ccpgames.com，如果与资源服务器连接不畅，在游戏中就会遇到资源加载缓慢的情况，如左下角指示器长时间提示加载资源但仍有贴图、模型丢失等。
+我们 (EVEModX Developers) 发现，国服的资源文件服务器 res.eve-online.com.cn 实际上是世界服资源服务器的反向代理。这也就意味着即使国服不更新，我们也可以从国内的服务器上加载到世界服的资源。
+两台服务器的 HTTP Header 对比图
+可以知道这其实是一个反代，为了让国内玩家也可以流畅使用这个缓存，需要让这个服务器把世界服的资源也缓存下来。
+在世界服客户端内找到了资源文件 Index，写了个脚本跑一遍缓存
+package main import ( &amp;quot;io&amp;quot; &amp;quot;os&amp;quot; &amp;quot;fmt&amp;quot; &amp;quot;log&amp;quot; &amp;quot;bufio&amp;quot; &amp;quot;strings&amp;quot; &amp;quot;net/http&amp;quot; p &amp;quot;path/filepath&amp;quot; &amp;quot;github.com/cheggaaa/pb&amp;quot; ) var ( uris []string concurrency int = 20 //线程数 endPoint = &amp;quot;http://res.eve-online.com.cn/&amp;quot; logger = log.New(os.Stdout, &amp;quot;&amp;quot;, log.Lshortfile| log.Ldate| log.Ltime| log.Lmicroseconds) ) func downloadFile(filepath string, url string) (err error) { os.MkdirAll(p.Dir(filepath), 0777) RETRY1: out, err := os.Create(filepath) if err !</description>
+    </item>
+    
+    <item>
+      <title>FFXIV 换算地球时间为艾欧泽亚时间</title>
+      <link>https://violarulan.github.io/blog/earth-time-to-eorzea-time/</link>
+      <pubDate>Mon, 13 Mar 2017 18:16:55 +0800</pubDate>
+      
+      <guid>https://violarulan.github.io/blog/earth-time-to-eorzea-time/</guid>
+      <description>最终幻想 14 有三个时间，服务器时间(UTC)、艾欧泽亚时间和本地时间。
+服务器时间没的说，就是 GMT+0 时间；本地时间是玩家当地时间，中国在 GMT+8 时区。而艾欧泽亚时间是游戏内日月交替的时间，流速比地球时间快，艾欧泽亚时间还涉及到了采集职业，掌握了艾欧泽亚时间对应的采集方向就可以针对性的高效采集。
+艾欧泽亚时间流速比地球时间快，60 分钟的艾欧泽亚时间差不多等于不到 3 分钟的地球时间。观察一下均匀的时间变化可以看出似乎艾欧泽亚时间只是单纯的地球时间乘以某个常数的结果。
+经过简单的几次试验推出艾欧泽亚时间基于 Unix(1970-01-01) 时间而非从 0001-01-01 开始的时间。
+根据 http://ffxiv.gamerescape.com/wiki/Time 的说明
+   Eorzean Increments Components in Eorzean Units Conversion into Earth Time     1 minute 60 seconds 2 11&amp;frasl;12 seconds   1 bell 60 minutes 2 minutes, 55 seconds   1 sun 24 bells 70 minutes   1 week 8 suns 9 hours, 20 minutes   1 moon 32 suns 37 hours, 20 minutes   1 year 12 moons 18 days, 16 hours    1 Bell = 60 分钟 = 3600 秒，就可以换算出时间常数</description>
+    </item>
+    
+    <item>
+      <title>C# 向最终幻想 14 窗口发送按键信息</title>
+      <link>https://violarulan.github.io/blog/send-key-press-to-ffxiv-window/</link>
+      <pubDate>Sat, 18 Feb 2017 09:23:59 +0800</pubDate>
+      
+      <guid>https://violarulan.github.io/blog/send-key-press-to-ffxiv-window/</guid>
+      <description>最近在做钓鱼脚本。
+class Send { #region Imports [DllImport(&amp;quot;user32.dll&amp;quot;)] static extern bool PostMessage(IntPtr hWnd, uint Msg, int wParam, uint lParam); [DllImport(&amp;quot;user32.dll&amp;quot;, SetLastError = true)] static extern IntPtr FindWindow(string lpClassName, string lpWindowName); [DllImport(&amp;quot;user32.dll&amp;quot;, SetLastError = true)] static extern IntPtr FindWindowEx(IntPtr hwndParent, IntPtr hwndChildAfter, string lpszClass, string lpszWindow); #endregion public static void KeyPress(Keys key, int sleep = 100) { const int WM_KEYDOWN = 0x100; const int WM_KEYUP = 0x101; IntPtr ffxiv = FindWindow(&amp;quot;ffxiv&amp;quot;, null); IntPtr editx = FindWindowEx(ffxiv, IntPtr.</description>
+    </item>
+    
+    <item>
+      <title>Tesseract 之训练自己的语言文件</title>
+      <link>https://violarulan.github.io/blog/tesseract-training/</link>
+      <pubDate>Wed, 04 Jan 2017 00:07:07 +0800</pubDate>
+      
+      <guid>https://violarulan.github.io/blog/tesseract-training/</guid>
+      <description>Tesseract 是一个著名、开源、多平台的 OCR 引擎，最初由惠普公司开发，后来由 Google 维护，现在项目托管在 Github 上。到目前为止已经支持了数十种语言（包括中文）。在我看来它最吸引人的地方是开发者可以训练出自己的语言文件用来识别。
+以自带语言库进行识别的方法不在本文范围之内.关于如何训练样本，Tesseract-OCR 官网有详细的介绍 http://code.google.com/p/tesseract-ocr/wiki/TrainingTesseract3，这里通过一个简单的例子来介绍一下如何进行样本训练。
+环境: Windows 10 x64, JRE 8
+训练工具 jTessBoxEditor，这个工具用来生成训练样本以及纠正监督，下载地址：http://sourceforge.net/projects/vietocr/files/jTessBoxEditor/。工具基于 Java 所以需要配置适当的运行环境。
+准备样本 准备自己的样本图像（越多越好），比如我准备了若干 B 站抽瓜子的验证码。
+因为 jTessBoxEditor 只接受 tiff 格式的图片，需要事先转换。可以使用 ImageMagick 等工具。
+合并样本图像 运行 jTessBoxEditor ，菜单栏 Tools-&amp;gt;Merge TIFF。在弹出的对话框中选择样本图像（按Shift选择多张），合并保存成 num.font.exp0.tif 文件。
+生成 Box 文件 tesseract.exe [-psm 7] num.font.exp0.tif num.font.exp0 batch.nochop makebox  如果输出中含有 Empty page!! 可以添加 -psm 参数修正。
+-psm N Set Tesseract to only run a subset of layout analysis and assume a certain form of image.</description>
+    </item>
+    
+    <item>
+      <title>投诉宽带广告的正确姿势</title>
+      <link>https://violarulan.github.io/blog/complain-on-chinatcc/</link>
+      <pubDate>Sat, 24 Dec 2016 15:27:15 +0800</pubDate>
+      
+      <guid>https://violarulan.github.io/blog/complain-on-chinatcc/</guid>
+      <description>很多都是老生常谈了
+在向 工信部 投诉之前，一定要向客服投诉！重要事情不说三遍
+申诉步骤为
+ 本地五位数客服，如联通为 10010 当地的总经理热线(可省) 省公司投诉(可省) 集团总部投诉(可省) 工信部  前四步直接说上网弹广告，要求解决办法。在这时你可能会遇到咬死是你软件的问题（如中木马），不要扯太多的技术问题，他们听不懂，一定要让联通认定为他们宽带的问题，可以和他说用电信移动没有问题，只有联通会弹广告。最后说一下解决不了去工信部投诉。
+不要着急第五步去工信部投诉。在这期间你已经自上而下创建了若干个联通内部工单，可能会收到来自不同级别的好几个电话，若能解决广告问题，那么恭喜你；如果解决不了，一定要让客服人员在最后时把你的工单定性为“客户不认可”，不然工信部投诉可能会被认为无效。</description>
+    </item>
+    
+    <item>
+      <title>Git 使用 GPG 签名验证</title>
+      <link>https://violarulan.github.io/blog/git-gpg-verify/</link>
+      <pubDate>Sun, 20 Nov 2016 13:50:06 +0800</pubDate>
+      
+      <guid>https://violarulan.github.io/blog/git-gpg-verify/</guid>
+      <description>为了装逼可以在 Github 上面显示一个 Verified 的标签
+下面是折腾步骤
+生成 GPG Key $ gpg --gen-key gpg (GnuPG/MacGPG2) 2.0.28; Copyright (C) 2015 Free Software Foundation, Inc. This is free software: you are free to change and redistribute it. There is NO WARRANTY, to the extent permitted by law. Please select what kind of key you want: (1) RSA and RSA (default) (2) DSA and Elgamal (3) DSA (sign only) (4) RSA (sign only) # 选择 Key 种类，选择 1 或者 回车 Your selection?</description>
+    </item>
+    
+    <item>
+      <title>在 Ubuntu 上通过 APT 安装 R</title>
+      <link>https://violarulan.github.io/blog/install-r-on-ubuntu-xenial/</link>
+      <pubDate>Sat, 05 Nov 2016 09:08:51 +0800</pubDate>
+      
+      <guid>https://violarulan.github.io/blog/install-r-on-ubuntu-xenial/</guid>
+      <description>R 不在 Ubuntu 的官方源中，通过包管理器安装需要添加源(CRAN)
+ CRAN is a network of ftp and web servers around the world that store identical, up-to-date, versions of code and documentation for R. Please use the CRAN mirror nearest to you to minimize network load. CRAN是世界范围内保存并分发统一、最新版本的 R 代码和文档的一个网络。请使用距离你最近的 CRAN 镜像。
+ 在 https://cran.r-project.org/mirrors.html 可以查看所有 CRAN Mirror
+这里以清华 TUNA 源 (https://mirrors.tuna.tsinghua.edu.cn/CRAN/) 为例
+添加源 这里以 16.04 Xenial 为例，可自行替换为 wily/trusty/precise
+deb http://mirrors.ustc.edu.cn/CRAN/bin/linux/ubuntu/ xenial/  添加 key CRAN 存储的的包经由 KeyID E084DAB9 签名验证，需要添加 Key</description>
+    </item>
+    
+    <item>
+      <title>Golang 余弦相似度的简易算法</title>
+      <link>https://violarulan.github.io/blog/golang-simple-similarity-comparison/</link>
+      <pubDate>Fri, 28 Oct 2016 19:30:01 +0800</pubDate>
+      
+      <guid>https://violarulan.github.io/blog/golang-simple-similarity-comparison/</guid>
+      <description>package main import ( &amp;quot;fmt&amp;quot; &amp;quot;errors&amp;quot; &amp;quot;math&amp;quot; ) func Cosine(a []float64, b []float64) (cosine float64, err error) { count := 0 length_a := len(a) length_b := len(b) if length_a &amp;gt; length_b { count = length_a } else { count = length_b } sumA := 0.0 s1 := 0.0 s2 := 0.0 for k := 0; k &amp;lt; count; k++ { if k &amp;gt;= length_a { s2 += math.Pow(b[k], 2) continue } if k &amp;gt;= length_b { s1 += math.</description>
+    </item>
+    
+    <item>
+      <title>树莓派 3B 上安装 libnfc 配合 acr122u 读取 nfc</title>
+      <link>https://violarulan.github.io/blog/nfc-on-raspberry-3b-with-acr122u-using-libnfc/</link>
+      <pubDate>Mon, 17 Oct 2016 14:48:33 +0800</pubDate>
+      
+      <guid>https://violarulan.github.io/blog/nfc-on-raspberry-3b-with-acr122u-using-libnfc/</guid>
+      <description>ACR122U 是一个通过 USB 接口进行 13.56 MHz 频率下进行非接触式交互数据(近场通信)的模块，可以在深水宝买到，虽然据说水货很多(水货的提示灯在顶部左侧)。
+推荐在 Linux 环境下使用，驱动据说会比 Windows 下(有时会硬件假死)稳定很多。
+首先需要树莓派，在这里以官方 Raspbian Jessie 介绍。
+安装 libudev-dev sudo apt-get install libudev-dev  安装 libusb sudo apt-get install libusb-dev  编译安装 libnfc wget https://bintray.com/artifact/download/nfc-tools/sources/libnfc-1.7.1.tar.bz2 tar xjf libnfc-1.7.1.tar.bz2 cd libnfc-1.7.1 ./configure –prefix=/usr –sysconfdir=/etc make sudo make install  接下来是与其他 Linux 系统有些不一样的地方，需要 Blacklist 掉两个无关 mod 否则会 lock 设备造成 device is busy 错误 sudo nano /etc/modprobe.d/blacklist.conf  将下面内容加入进去
+blacklist pn533 blacklist nfc  保存退出 sudo modprobe -r pn533 nfc sudo reboot  重启后 sudo nfc-list  It works!</description>
+    </item>
+    
+  </channel>
+</rss>

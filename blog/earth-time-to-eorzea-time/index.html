@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="chrome=1">
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="referrer" content="no-referrer">
+<meta name="author" content="Arthur Dent">
+<meta name="description" content="最终幻想 14 有三个时间，服务器时间(UTC)、艾欧泽亚时间和本地时间。
+服务器时间没的说，就是 GMT&#43;0 时间；本地时间是玩家当地时间，中国在 GMT&#43;8 时区。而艾欧泽亚时间是游戏内日月交替的时间，流速比地球时间快，艾欧泽亚时间还涉及到了采集职业，掌握了艾欧泽亚时间对应的采集方向就可以针对性的高效采集。
+艾欧泽亚时间流速比地球时间快，60 分钟的艾欧泽亚时间差不多等于不到 3 分钟的地球时间。观察一下均匀的时间变化可以看出似乎艾欧泽亚时间只是单纯的地球时间乘以某个常数的结果。
+经过简单的几次试验推出艾欧泽亚时间基于 Unix(1970-01-01) 时间而非从 0001-01-01 开始的时间。
+根据 http://ffxiv.gamerescape.com/wiki/Time 的说明
+   Eorzean Increments Components in Eorzean Units Conversion into Earth Time     1 minute 60 seconds 2 11&frasl;12 seconds   1 bell 60 minutes 2 minutes, 55 seconds   1 sun 24 bells 70 minutes   1 week 8 suns 9 hours, 20 minutes   1 moon 32 suns 37 hours, 20 minutes   1 year 12 moons 18 days, 16 hours    1 Bell = 60 分钟 = 3600 秒，就可以换算出时间常数">
+
+<meta property="og:title" content="FFXIV 换算地球时间为艾欧泽亚时间" />
+<meta property="og:description" content="最终幻想 14 有三个时间，服务器时间(UTC)、艾欧泽亚时间和本地时间。
+服务器时间没的说，就是 GMT&#43;0 时间；本地时间是玩家当地时间，中国在 GMT&#43;8 时区。而艾欧泽亚时间是游戏内日月交替的时间，流速比地球时间快，艾欧泽亚时间还涉及到了采集职业，掌握了艾欧泽亚时间对应的采集方向就可以针对性的高效采集。
+艾欧泽亚时间流速比地球时间快，60 分钟的艾欧泽亚时间差不多等于不到 3 分钟的地球时间。观察一下均匀的时间变化可以看出似乎艾欧泽亚时间只是单纯的地球时间乘以某个常数的结果。
+经过简单的几次试验推出艾欧泽亚时间基于 Unix(1970-01-01) 时间而非从 0001-01-01 开始的时间。
+根据 http://ffxiv.gamerescape.com/wiki/Time 的说明
+   Eorzean Increments Components in Eorzean Units Conversion into Earth Time     1 minute 60 seconds 2 11&frasl;12 seconds   1 bell 60 minutes 2 minutes, 55 seconds   1 sun 24 bells 70 minutes   1 week 8 suns 9 hours, 20 minutes   1 moon 32 suns 37 hours, 20 minutes   1 year 12 moons 18 days, 16 hours    1 Bell = 60 分钟 = 3600 秒，就可以换算出时间常数" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://violarulan.github.io/blog/earth-time-to-eorzea-time/" />
+
+
+
+<meta property="article:published_time" content="2017-03-13T18:16:55&#43;08:00"/>
+<meta property="article:modified_time" content="2017-03-13T18:16:55&#43;08:00"/>
+
+
+
+
+
+
+
+
+
+
+
+
+<title>
+
+
+     FFXIV 换算地球时间为艾欧泽亚时间 
+
+</title>
+<link rel="canonical" href="https://violarulan.github.io/blog/earth-time-to-eorzea-time/">
+
+
+
+
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/styles/default.min.css">
+
+
+
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,700|Ubuntu+Mono:400,400i,700,700i|Raleway:500">
+
+
+
+    
+    <link rel="stylesheet" href="https://violarulan.github.io/css/reset.css?t=2017-07-22%2021%3a35%3a21.880212%20%2b0800%20CST">
+    <link rel="stylesheet" href="https://violarulan.github.io/css/pygments.css?t=2017-07-22%2021%3a35%3a21.880212%20%2b0800%20CST">
+    <link rel="stylesheet" href="https://violarulan.github.io/css/main.css?t=2017-07-22%2021%3a35%3a21.880212%20%2b0800%20CST">
+    
+        <link rel="stylesheet" href="https://violarulan.github.io/css/override.css?t=2017-07-22%2021%3a35%3a21.880212%20%2b0800%20CST">
+    
+
+
+
+
+<link rel="shortcut icon"
+
+    href="https://violarulan.github.io/img/leaf.ico"
+
+>
+
+
+
+
+</head>
+
+
+<body lang="cn">
+
+<section class="header">
+    <div class="container">
+        <div class="content">
+            
+                
+                
+                
+                
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        
+                    
+                
+                    
+                        
+                    
+                
+                    
+                        
+                    
+                
+                    
+                
+                    
+                
+                
+                <a href="https://violarulan.github.io/"><img class="avatar" src="https://violarulan.github.io/img/profile.png" srcset="https://violarulan.github.io/img/profile.png 1x,https://violarulan.github.io/img/profile-2x.png 2x,https://violarulan.github.io/img/profile-3x.png 3x,https://violarulan.github.io/img/profile-4x.png 4x"></a>
+            
+            <a href="https://violarulan.github.io/"><div class="name">Arthur Dent</div></a>
+            
+            <nav>
+                <ul>
+                    
+                        <li class="nav-blog"><a href="https://violarulan.github.io/blog/"><span>Blog</span></a></li>
+                    
+                        <li class="nav-about"><a href="https://violarulan.github.io/about/"><span>About</span></a></li>
+                    
+                        <li class="nav-links"><a href="https://violarulan.github.io/links/"><span>Links</span></a></li>
+                    
+                </ul>
+            </nav>
+        </div>
+    </div>
+</section>
+
+<section class="icons">
+    <div class="container">
+        <div class="content">
+
+        
+            <a href="//github.com/violarulan" target="_blank" rel="noopener"><img class="icon" src="https://violarulan.github.io/img/github.svg" alt="github" /></a>
+        
+
+        
+            <a href="//twitter.com/violarulan" target="_blank" rel="noopener"><img class="icon" src="https://violarulan.github.io/img/twitter.svg" alt="twitter" /></a>
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+            <a href="https://violarulan.github.io/index.xml"><img class="icon" src="https://violarulan.github.io/img/rss.svg" alt="rss" /></a>
+        
+        
+        </div>
+    </div>
+</section>
+
+
+<section class="main post non-narrow zero-top-spacing">
+    <div class="container">
+        <div class="content">
+            <div class="front-matter">
+                <div class="title-container">
+                    <div class="page-heading">
+
+    FFXIV 换算地球时间为艾欧泽亚时间
+
+</div>
+
+                    <div class="initials"><a href="https://violarulan.github.io/">ad</a></div>
+                </div>
+                <div class="meta">
+                    
+                    <div class="date" title='Mon Mar 13 2017 18:16:55 CST'>Mar 13, 2017</div>
+                    
+                    
+		    <div class="reading-time"><div class="middot"></div>已阅读了一分钟</div>
+                    
+                </div>
+            </div>
+            <div class="markdown">
+                <p><img src="https://ooo.0o0.ooo/2017/03/13/58c6bdc252178.jpg" alt="" /></p>
+
+<p>最终幻想 14 有三个时间，服务器时间(UTC)、艾欧泽亚时间和本地时间。</p>
+
+<p>服务器时间没的说，就是 GMT+0 时间；本地时间是玩家当地时间，中国在 GMT+8 时区。而艾欧泽亚时间是游戏内日月交替的时间，流速比地球时间快，艾欧泽亚时间还涉及到了采集职业，掌握了艾欧泽亚时间对应的采集方向就可以针对性的高效采集。</p>
+
+<p>艾欧泽亚时间流速比地球时间快，60 分钟的艾欧泽亚时间差不多等于不到 3 分钟的地球时间。观察一下均匀的时间变化可以看出似乎艾欧泽亚时间只是单纯的地球时间乘以某个常数的结果。</p>
+
+<p>经过简单的几次试验推出艾欧泽亚时间基于 Unix(1970-01-01) 时间而非从 0001-01-01 开始的时间。</p>
+
+<p>根据 <a href="http://ffxiv.gamerescape.com/wiki/Time">http://ffxiv.gamerescape.com/wiki/Time</a> 的说明</p>
+
+<table>
+<thead>
+<tr>
+<th align="center"><strong>Eorzean Increments</strong></th>
+<th align="center"><strong>Components in Eorzean Units</strong></th>
+<th align="center"><strong>Conversion into Earth Time</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="center">1 minute</td>
+<td align="center">60 seconds</td>
+<td align="center">2 <sup>11</sup>&frasl;<sub>12</sub> seconds</td>
+</tr>
+
+<tr>
+<td align="center">1 bell</td>
+<td align="center">60 minutes</td>
+<td align="center">2 minutes, 55 seconds</td>
+</tr>
+
+<tr>
+<td align="center">1 sun</td>
+<td align="center">24 bells</td>
+<td align="center">70 minutes</td>
+</tr>
+
+<tr>
+<td align="center">1 week</td>
+<td align="center">8 suns</td>
+<td align="center">9 hours, 20 minutes</td>
+</tr>
+
+<tr>
+<td align="center">1 moon</td>
+<td align="center">32 suns</td>
+<td align="center">37 hours, 20 minutes</td>
+</tr>
+
+<tr>
+<td align="center">1 year</td>
+<td align="center">12 moons</td>
+<td align="center">18 days, 16 hours</td>
+</tr>
+</tbody>
+</table>
+
+<p>1 Bell = 60 分钟 = 3600 秒，就可以换算出时间常数</p>
+
+<p>3600/175≈20.57142857142857</p>
+
+<p>结合 Google 到的轮子验证思路是正确的。</p>
+
+<p>写了个 Golang 的转换库
+<a href="https://github.com/violarulan/EorzeaTimeConvert">https://github.com/violarulan/EorzeaTimeConvert</a></p>
+
+<p>Example</p>
+
+<pre><code class="language-golang">package main
+ 
+import (
+    &quot;fmt&quot;
+    &quot;time&quot;
+    c &quot;github.com/violarulan/EorzeaTimeConvert&quot;
+)
+ 
+func main(){
+    // Convert a time.Time to a EorzeaTime
+    var ret = c.ConvertToEorzeaTime(time.Now())
+    fmt.Println(ret)
+    // {924 6 30 2 31 53}
+ 
+    var str = c.ConvertToEorzeaTimeString(time.Now(), &quot;%s-%s-%s %s:%s:%s&quot;)
+    fmt.Println(str)
+    // 924-06-30 08:01:22
+}
+</code></pre>
+
+                <br>
+		<p><a href="https://violarulan.github.io/blog/">回到文章列表</a></p>
+            </div>
+            <br>
+            <div class="disqus">
+                <div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "cocoaexamplesite" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-123-45', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='//www.google-analytics.com/analytics.js'></script>
+
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/highlight.min.js"></script>
+  
+
+  <script type="text/javascript">
+    hljs.initHighlightingOnLoad();
+  </script>
+
+
+
+
+</body>
+</html>
+

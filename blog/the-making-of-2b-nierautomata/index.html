@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="chrome=1">
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="referrer" content="no-referrer">
+<meta name="author" content="Arthur Dent">
+<meta name="description" content="大家好！
+我是 Hito Matsudaira，《尼尔: 机械纪元》的角色建模师。
+在你想起角色建模师时有没有什么特殊的名人出现在你的脑海中？对我来说并没有想起任何人——角色建模师近日来并没有出现在公众视线下！能有这样的机会对我来说是很幸运的，在这里我有机会来向你们讲述我心中的想法以及如何使用一些制作中的人物草稿建立角色模型。
+角色建模的过程并非是简单的从 2D 画作转换为 3D 模型。
+创建模型
+一般而言，建模过程遵循以下步骤
+ 使用粗模(rough model)预测整体形式和其最终形象 建立高质量的精确角色模型 将建立的角色模型构建成可被游戏引擎驱动的模型  我最初基于从角色设计师 Akihiko Yoshida (吉田 明彦) 那里收到的粗略的人物草稿开始建立粗模。
+Yoshida 先生的品味对我来说很清楚（从我在上面图像隐藏的部分中我可以看出——请放心，那些并不是一些怪异的什么东西，只是一些我不能向你们展示的参考图片）。凭借它们，我即使不和他沟通交流就能知道他内心的想法，我很喜欢这样。
+这就是我创建的粗模，我来到《尼尔: 机械纪元》团队做的第一项工作就是完成它。大概花了我一到两周时间完成。
+完成它后我把它拿给了总监 Yoko Taro (横尾 太郎) 看，他说：“太棒了！”。建立这个模型我参考了许多东西，比如角色设计 Yoshida 先生参与过的许多游戏（最终幻想 12 的建模实在是太棒了..）
+当我们讨论粗模时，你可能觉得他会非常粗略，但实际上它花费了我大量精力。
+有这个粗略的轮廓就可以大功告成了吗？建立它是否不需要让动作师花费太多精力调整角色动作？它需要多少根骨架？我们要如何操作骨架使它能够移动？
+我们使用 2B 的人物模型来给整个游戏项目测试跑分(Benchmark)。所以我需要考虑各种基础参数，如身体比例和造型、设计着色器甚至量产(译注: 指周边产物)时的花销，这些工作全部在建立粗模时完成。
+当今成品模型难以还原成工程项目，所以我也有必要在设计数据时考虑到它可能在将来的项目中使用时产生的影响，我是一个美术家，不过我动了很多脑筋思考这些问题。
+接下来是最有趣的部分：在高质量模型上绘制细节 在电脑上建模就像捏泥一样，我专注于在人物模型各处捏来捏去，做这个时我没有想其他任何东西，真的。
+最后我将它构建为游戏人物模型 简而言之，这个步骤即包括了在多边形(Polygon)上粘贴贴图，然而随着终端设备的更新换代，建一个人物模型所需要的多边形数和图片数也大幅增加。
+PlayStation 2 平台上的多边形数大约是几千，并且只需要一到两种贴图材质，但是在 PlayStation 4 平台，多边形数量大约需要 100,000 个，图片则需要 8 种不同类型的贴图，如果细节层次要求更高还可以继续增加数量…
+将贴图附加在白模(raw polygon)上的图片过程
+白模 → 附加从高质量模型中提取出的表面轮廓信息的图像 → 使用不同类型的贴图指定纹理 → 使用贴图制定颜色 → 用最后一点创造力给模型带来质感!">
+
+<meta property="og:title" content="(自译) 尼尔机械纪元：2 号 B 型的制作过程" />
+<meta property="og:description" content="大家好！
+我是 Hito Matsudaira，《尼尔: 机械纪元》的角色建模师。
+在你想起角色建模师时有没有什么特殊的名人出现在你的脑海中？对我来说并没有想起任何人——角色建模师近日来并没有出现在公众视线下！能有这样的机会对我来说是很幸运的，在这里我有机会来向你们讲述我心中的想法以及如何使用一些制作中的人物草稿建立角色模型。
+角色建模的过程并非是简单的从 2D 画作转换为 3D 模型。
+创建模型
+一般而言，建模过程遵循以下步骤
+ 使用粗模(rough model)预测整体形式和其最终形象 建立高质量的精确角色模型 将建立的角色模型构建成可被游戏引擎驱动的模型  我最初基于从角色设计师 Akihiko Yoshida (吉田 明彦) 那里收到的粗略的人物草稿开始建立粗模。
+Yoshida 先生的品味对我来说很清楚（从我在上面图像隐藏的部分中我可以看出——请放心，那些并不是一些怪异的什么东西，只是一些我不能向你们展示的参考图片）。凭借它们，我即使不和他沟通交流就能知道他内心的想法，我很喜欢这样。
+这就是我创建的粗模，我来到《尼尔: 机械纪元》团队做的第一项工作就是完成它。大概花了我一到两周时间完成。
+完成它后我把它拿给了总监 Yoko Taro (横尾 太郎) 看，他说：“太棒了！”。建立这个模型我参考了许多东西，比如角色设计 Yoshida 先生参与过的许多游戏（最终幻想 12 的建模实在是太棒了..）
+当我们讨论粗模时，你可能觉得他会非常粗略，但实际上它花费了我大量精力。
+有这个粗略的轮廓就可以大功告成了吗？建立它是否不需要让动作师花费太多精力调整角色动作？它需要多少根骨架？我们要如何操作骨架使它能够移动？
+我们使用 2B 的人物模型来给整个游戏项目测试跑分(Benchmark)。所以我需要考虑各种基础参数，如身体比例和造型、设计着色器甚至量产(译注: 指周边产物)时的花销，这些工作全部在建立粗模时完成。
+当今成品模型难以还原成工程项目，所以我也有必要在设计数据时考虑到它可能在将来的项目中使用时产生的影响，我是一个美术家，不过我动了很多脑筋思考这些问题。
+接下来是最有趣的部分：在高质量模型上绘制细节 在电脑上建模就像捏泥一样，我专注于在人物模型各处捏来捏去，做这个时我没有想其他任何东西，真的。
+最后我将它构建为游戏人物模型 简而言之，这个步骤即包括了在多边形(Polygon)上粘贴贴图，然而随着终端设备的更新换代，建一个人物模型所需要的多边形数和图片数也大幅增加。
+PlayStation 2 平台上的多边形数大约是几千，并且只需要一到两种贴图材质，但是在 PlayStation 4 平台，多边形数量大约需要 100,000 个，图片则需要 8 种不同类型的贴图，如果细节层次要求更高还可以继续增加数量…
+将贴图附加在白模(raw polygon)上的图片过程
+白模 → 附加从高质量模型中提取出的表面轮廓信息的图像 → 使用不同类型的贴图指定纹理 → 使用贴图制定颜色 → 用最后一点创造力给模型带来质感!" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://violarulan.github.io/blog/the-making-of-2b-nierautomata/" />
+
+
+
+<meta property="article:published_time" content="2017-05-21T18:10:58&#43;08:00"/>
+<meta property="article:modified_time" content="2017-05-21T18:10:58&#43;08:00"/>
+
+
+
+
+
+
+
+
+
+
+
+
+<title>
+
+
+     (自译) 尼尔机械纪元：2 号 B 型的制作过程 
+
+</title>
+<link rel="canonical" href="https://violarulan.github.io/blog/the-making-of-2b-nierautomata/">
+
+
+
+
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/styles/default.min.css">
+
+
+
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,700|Ubuntu+Mono:400,400i,700,700i|Raleway:500">
+
+
+
+    
+    <link rel="stylesheet" href="https://violarulan.github.io/css/reset.css?t=2017-07-22%2021%3a35%3a21.880212%20%2b0800%20CST">
+    <link rel="stylesheet" href="https://violarulan.github.io/css/pygments.css?t=2017-07-22%2021%3a35%3a21.880212%20%2b0800%20CST">
+    <link rel="stylesheet" href="https://violarulan.github.io/css/main.css?t=2017-07-22%2021%3a35%3a21.880212%20%2b0800%20CST">
+    
+        <link rel="stylesheet" href="https://violarulan.github.io/css/override.css?t=2017-07-22%2021%3a35%3a21.880212%20%2b0800%20CST">
+    
+
+
+
+
+<link rel="shortcut icon"
+
+    href="https://violarulan.github.io/img/leaf.ico"
+
+>
+
+
+
+
+</head>
+
+
+<body lang="cn">
+
+<section class="header">
+    <div class="container">
+        <div class="content">
+            
+                
+                
+                
+                
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        
+                    
+                
+                    
+                        
+                    
+                
+                    
+                        
+                    
+                
+                    
+                
+                    
+                
+                
+                <a href="https://violarulan.github.io/"><img class="avatar" src="https://violarulan.github.io/img/profile.png" srcset="https://violarulan.github.io/img/profile.png 1x,https://violarulan.github.io/img/profile-2x.png 2x,https://violarulan.github.io/img/profile-3x.png 3x,https://violarulan.github.io/img/profile-4x.png 4x"></a>
+            
+            <a href="https://violarulan.github.io/"><div class="name">Arthur Dent</div></a>
+            
+            <nav>
+                <ul>
+                    
+                        <li class="nav-blog"><a href="https://violarulan.github.io/blog/"><span>Blog</span></a></li>
+                    
+                        <li class="nav-about"><a href="https://violarulan.github.io/about/"><span>About</span></a></li>
+                    
+                        <li class="nav-links"><a href="https://violarulan.github.io/links/"><span>Links</span></a></li>
+                    
+                </ul>
+            </nav>
+        </div>
+    </div>
+</section>
+
+<section class="icons">
+    <div class="container">
+        <div class="content">
+
+        
+            <a href="//github.com/violarulan" target="_blank" rel="noopener"><img class="icon" src="https://violarulan.github.io/img/github.svg" alt="github" /></a>
+        
+
+        
+            <a href="//twitter.com/violarulan" target="_blank" rel="noopener"><img class="icon" src="https://violarulan.github.io/img/twitter.svg" alt="twitter" /></a>
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+            <a href="https://violarulan.github.io/index.xml"><img class="icon" src="https://violarulan.github.io/img/rss.svg" alt="rss" /></a>
+        
+        
+        </div>
+    </div>
+</section>
+
+
+<section class="main post non-narrow zero-top-spacing">
+    <div class="container">
+        <div class="content">
+            <div class="front-matter">
+                <div class="title-container">
+                    <div class="page-heading">
+
+    (自译) 尼尔机械纪元：2 号 B 型的制作过程
+
+</div>
+
+                    <div class="initials"><a href="https://violarulan.github.io/">ad</a></div>
+                </div>
+                <div class="meta">
+                    
+                    <div class="date" title='Sun May 21 2017 18:10:58 CST'>May 21, 2017</div>
+                    
+                    
+		    <div class="reading-time"><div class="middot"></div>已阅读了一分钟</div>
+                    
+                </div>
+            </div>
+            <div class="markdown">
+                
+
+<p>大家好！</p>
+
+<p>我是 Hito Matsudaira，《尼尔: 机械纪元》的角色建模师。</p>
+
+<p>在你想起角色建模师时有没有什么特殊的名人出现在你的脑海中？对我来说并没有想起任何人——角色建模师近日来并没有出现在公众视线下！能有这样的机会对我来说是很幸运的，在这里我有机会来向你们讲述我心中的想法以及如何使用一些制作中的人物草稿建立角色模型。</p>
+
+<p>角色建模的过程并非是简单的从 2D 画作转换为 3D 模型。</p>
+
+<p>创建模型</p>
+
+<p>一般而言，建模过程遵循以下步骤</p>
+
+<ol>
+<li>使用粗模(rough model)预测整体形式和其最终形象</li>
+<li>建立高质量的精确角色模型</li>
+<li>将建立的角色模型构建成可被游戏引擎驱动的模型</li>
+</ol>
+
+<p>我最初基于从角色设计师 Akihiko Yoshida (吉田 明彦) 那里收到的粗略的人物草稿开始建立粗模。</p>
+
+<p><img src="https://ooo.0o0.ooo/2017/04/05/58e47ac76c1d8.jpg" alt="" /></p>
+
+<p><img src="https://ooo.0o0.ooo/2017/04/05/58e47ac823197.jpg" alt="" /></p>
+
+<p>Yoshida 先生的品味对我来说很清楚（从我在上面图像隐藏的部分中我可以看出——请放心，那些并不是一些怪异的什么东西，只是一些我不能向你们展示的参考图片）。凭借它们，我即使不和他沟通交流就能知道他内心的想法，我很喜欢这样。</p>
+
+<p>这就是我创建的粗模，我来到《尼尔: 机械纪元》团队做的第一项工作就是完成它。大概花了我一到两周时间完成。</p>
+
+<p><img src="https://ooo.0o0.ooo/2017/04/05/58e47ba7bb49a.jpg" alt="" /></p>
+
+<p>完成它后我把它拿给了总监 Yoko Taro (横尾 太郎) 看，他说：“太棒了！”。建立这个模型我参考了许多东西，比如角色设计 Yoshida 先生参与过的许多游戏（最终幻想 12 的建模实在是太棒了..）</p>
+
+<p>当我们讨论粗模时，你可能觉得他会非常粗略，但实际上它花费了我大量精力。</p>
+
+<p>有这个粗略的轮廓就可以大功告成了吗？建立它是否不需要让动作师花费太多精力调整角色动作？它需要多少根骨架？我们要如何操作骨架使它能够移动？</p>
+
+<p>我们使用 2B 的人物模型来给整个游戏项目测试跑分(Benchmark)。所以我需要考虑各种基础参数，如身体比例和造型、设计着色器甚至量产(译注: 指周边产物)时的花销，这些工作全部在建立粗模时完成。</p>
+
+<p>当今成品模型难以还原成工程项目，所以我也有必要在设计数据时考虑到它可能在将来的项目中使用时产生的影响，我是一个美术家，不过我动了很多脑筋思考这些问题。</p>
+
+<h4 id="接下来是最有趣的部分-在高质量模型上绘制细节">接下来是最有趣的部分：在高质量模型上绘制细节</h4>
+
+<p><img src="https://ooo.0o0.ooo/2017/04/05/58e47e0723a74.jpg" alt="" /></p>
+
+<p>在电脑上建模就像捏泥一样，我专注于在人物模型各处捏来捏去，做这个时我没有想其他任何东西，真的。</p>
+
+<h4 id="最后我将它构建为游戏人物模型">最后我将它构建为游戏人物模型</h4>
+
+<p><img src="https://ooo.0o0.ooo/2017/04/05/58e47ea520507.jpg" alt="" /></p>
+
+<p>简而言之，这个步骤即包括了在多边形(Polygon)上粘贴贴图，然而随着终端设备的更新换代，建一个人物模型所需要的多边形数和图片数也大幅增加。</p>
+
+<p>PlayStation 2 平台上的多边形数大约是几千，并且只需要一到两种贴图材质，但是在 PlayStation 4 平台，多边形数量大约需要 100,000 个，图片则需要 8 种不同类型的贴图，如果细节层次要求更高还可以继续增加数量…</p>
+
+<p>将贴图附加在白模(raw polygon)上的图片过程</p>
+
+<p><img src="https://ooo.0o0.ooo/2017/04/05/58e4814f78fda.gif" alt="" /></p>
+
+<p>白模 → 附加从高质量模型中提取出的表面轮廓信息的图像 → 使用不同类型的贴图指定纹理 → 使用贴图制定颜色 → 用最后一点创造力给模型带来质感!
+完成!!</p>
+
+<p>除此之外，3D 建模中还有一个阴影层(Dark side)，用来在如人物弄湿时配置模型、其该如何移动、减小模型数据大小以使游戏引擎达到 60 fps 等等，不过我只记住了有趣的部分。</p>
+
+<h4 id="角色建模师担当的角色">角色建模师担当的角色</h4>
+
+<p>我已经介绍了我们都做什么，但是那只是动手的部分。</p>
+
+<p>角色建模师最重要的工作是如何构建起一个 3D 模型，让它可以在游戏中移动的同时不丢失原画的人物魅力(charm)。这么做的难点在于，由于角色从 2D 转化为 3D，并且变得更加逼真，传统 2D 绘图的魅力和波动(fluctuations)都会消失。除此之外，玩家在脑海中对于游戏角色的印象一般是基于插画(illustrations)得来的，所以玩家一开始会对这些 3D 模型产生一些负面看法。这让人很不爽(This stinks.)。</p>
+
+<p>然而我的工作是角色建模师，我的职责就是想出某种方法解决那些问题。</p>
+
+<ul>
+<li>因为前作的标题(NieR)被保留下来，我下的第一个决心就是建立一个角色模型，使其以某种方式将两个世界（《尼尔》和《尼尔: 机械纪元》）连接起来(这样做得到了前作爱好者们的原谅)。</li>
+</ul>
+
+<p>我首先想到的是，前作主角建模带来的魅力是什么，“不稳定的，如娃娃般的形式，犹如可以弄碎一般”，有一种脆弱的美感。</p>
+
+<p><img src="https://ooo.0o0.ooo/2017/04/05/58e486ea98b79.jpg" alt="" /></p>
+
+<p>基于这些，我将一些奇特的元素以不容易被察觉的方式融合进了 2B 的设计中。我不会说出哪些地方奇怪，但是正是由于一点点的奇特使人物模型看起来更加美丽。</p>
+
+<ul>
+<li>我的第二个决心是创造一种新的魅力(charm)，在视角变化时可以明显的感受出来，这种变化永远无法在 2D 绘画中体现出来(这样做意味着要舍去 2D 图像中模糊省略的部分，自创细节)</li>
+</ul>
+
+<p>3D 模型从视角到光线的变化给人的感觉是不同的，所以我们可以给角色创建从 2D 图像中看不出来的外观，在这个过程中，我倾注着很多、各种各样的情绪。</p>
+
+<p>沟</p>
+
+<p><img src="https://ooo.0o0.ooo/2017/04/05/58e489a6f1056.gif" alt="" /></p>
+
+<p>不同光泽下的图案花纹</p>
+
+<p><img src="https://ooo.0o0.ooo/2017/04/05/58e489da33915.gif" alt="" /></p>
+
+<p>3D 模型</p>
+
+<p><img src="https://ooo.0o0.ooo/2017/04/05/58e48a0354000.gif" alt="" /></p>
+
+<p>可以变湿</p>
+
+<p><img src="https://ooo.0o0.ooo/2017/04/05/58e48a949e8ca.gif" alt="" /></p>
+
+<p>在阳光下不同的材质质感和闪亮</p>
+
+<p><img src="https://ooo.0o0.ooo/2017/04/05/58e48ae1219c2.gif" alt="" /></p>
+
+<p>变化视角是很有趣的。</p>
+
+<p>我认为自己用这些方法建立了不错的角色模型，你认为如何呢？</p>
+
+<h4 id="总结">总结</h4>
+
+<p>游戏角色设计需要一些独特的技能。</p>
+
+<p>因为游戏都是互动的内容，玩家控制角色体验着它的经历，在游戏中抒发自己的情绪，在玩家心中一个角色的魅力是比较容易得到体现的。我认为这就是游戏建模的乐趣。</p>
+
+<p>你觉得呢？你可能从来没有想过这些问题，但我在创建模型时其实考虑过很多次这些事情。经历过这些，我也对自己绞尽脑汁而印象深刻。</p>
+
+<p>通过游玩这个游戏，2B 如果成为了每个人都喜欢的角色，我会很高兴。</p>
+
+<h4 id="彩蛋">彩蛋</h4>
+
+<p>官方图案设计！(拿去 Cosplay 吧!)</p>
+
+<p><img src="https://ooo.0o0.ooo/2017/04/05/58e48db7d2e56.jpg" alt="" /></p>
+
+<hr>
+
+<p>原文: <a href="http://eu.square-enix.com/en/blog/making-2b-nierautomata">http://eu.square-enix.com/en/blog/making-2b-nierautomata</a></p>
+
+<p>作者: Hito Matsudaira</p>
+
+<p>翻译: 如岚 <a href="https://everlastin.gs/2017/04/05/making-2b-nierautomata/">https://everlastin.gs/2017/04/05/making-2b-nierautomata/</a></p>
+
+                <br>
+		<p><a href="https://violarulan.github.io/blog/">回到文章列表</a></p>
+            </div>
+            <br>
+            <div class="disqus">
+                <div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "cocoaexamplesite" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-123-45', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='//www.google-analytics.com/analytics.js'></script>
+
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/highlight.min.js"></script>
+  
+
+  <script type="text/javascript">
+    hljs.initHighlightingOnLoad();
+  </script>
+
+
+
+
+</body>
+</html>
+

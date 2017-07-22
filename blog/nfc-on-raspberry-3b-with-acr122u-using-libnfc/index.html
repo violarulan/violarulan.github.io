@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="chrome=1">
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="referrer" content="no-referrer">
+<meta name="author" content="Arthur Dent">
+<meta name="description" content="ACR122U 是一个通过 USB 接口进行 13.56 MHz 频率下进行非接触式交互数据(近场通信)的模块，可以在深水宝买到，虽然据说水货很多(水货的提示灯在顶部左侧)。
+推荐在 Linux 环境下使用，驱动据说会比 Windows 下(有时会硬件假死)稳定很多。
+首先需要树莓派，在这里以官方 Raspbian Jessie 介绍。
+安装 libudev-dev sudo apt-get install libudev-dev  安装 libusb sudo apt-get install libusb-dev  编译安装 libnfc wget https://bintray.com/artifact/download/nfc-tools/sources/libnfc-1.7.1.tar.bz2 tar xjf libnfc-1.7.1.tar.bz2 cd libnfc-1.7.1 ./configure –prefix=/usr –sysconfdir=/etc make sudo make install  接下来是与其他 Linux 系统有些不一样的地方，需要 Blacklist 掉两个无关 mod 否则会 lock 设备造成 device is busy 错误 sudo nano /etc/modprobe.d/blacklist.conf  将下面内容加入进去
+blacklist pn533 blacklist nfc  保存退出 sudo modprobe -r pn533 nfc sudo reboot  重启后 sudo nfc-list  It works!">
+
+<meta property="og:title" content="树莓派 3B 上安装 libnfc 配合 acr122u 读取 nfc" />
+<meta property="og:description" content="ACR122U 是一个通过 USB 接口进行 13.56 MHz 频率下进行非接触式交互数据(近场通信)的模块，可以在深水宝买到，虽然据说水货很多(水货的提示灯在顶部左侧)。
+推荐在 Linux 环境下使用，驱动据说会比 Windows 下(有时会硬件假死)稳定很多。
+首先需要树莓派，在这里以官方 Raspbian Jessie 介绍。
+安装 libudev-dev sudo apt-get install libudev-dev  安装 libusb sudo apt-get install libusb-dev  编译安装 libnfc wget https://bintray.com/artifact/download/nfc-tools/sources/libnfc-1.7.1.tar.bz2 tar xjf libnfc-1.7.1.tar.bz2 cd libnfc-1.7.1 ./configure –prefix=/usr –sysconfdir=/etc make sudo make install  接下来是与其他 Linux 系统有些不一样的地方，需要 Blacklist 掉两个无关 mod 否则会 lock 设备造成 device is busy 错误 sudo nano /etc/modprobe.d/blacklist.conf  将下面内容加入进去
+blacklist pn533 blacklist nfc  保存退出 sudo modprobe -r pn533 nfc sudo reboot  重启后 sudo nfc-list  It works!" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://violarulan.github.io/blog/nfc-on-raspberry-3b-with-acr122u-using-libnfc/" />
+
+
+
+<meta property="article:published_time" content="2016-10-17T14:48:33&#43;08:00"/>
+<meta property="article:modified_time" content="2016-10-17T14:48:33&#43;08:00"/>
+
+
+
+
+
+
+
+
+
+
+
+
+<title>
+
+
+     树莓派 3B 上安装 libnfc 配合 acr122u 读取 nfc 
+
+</title>
+<link rel="canonical" href="https://violarulan.github.io/blog/nfc-on-raspberry-3b-with-acr122u-using-libnfc/">
+
+
+
+
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/styles/default.min.css">
+
+
+
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,700|Ubuntu+Mono:400,400i,700,700i|Raleway:500">
+
+
+
+    
+    <link rel="stylesheet" href="https://violarulan.github.io/css/reset.css?t=2017-07-22%2021%3a35%3a21.8887386%20%2b0800%20CST">
+    <link rel="stylesheet" href="https://violarulan.github.io/css/pygments.css?t=2017-07-22%2021%3a35%3a21.8887386%20%2b0800%20CST">
+    <link rel="stylesheet" href="https://violarulan.github.io/css/main.css?t=2017-07-22%2021%3a35%3a21.8887386%20%2b0800%20CST">
+    
+        <link rel="stylesheet" href="https://violarulan.github.io/css/override.css?t=2017-07-22%2021%3a35%3a21.8887386%20%2b0800%20CST">
+    
+
+
+
+
+<link rel="shortcut icon"
+
+    href="https://violarulan.github.io/img/leaf.ico"
+
+>
+
+
+
+
+</head>
+
+
+<body lang="cn">
+
+<section class="header">
+    <div class="container">
+        <div class="content">
+            
+                
+                
+                
+                
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        
+                    
+                
+                    
+                        
+                    
+                
+                    
+                        
+                    
+                
+                    
+                
+                    
+                
+                
+                <a href="https://violarulan.github.io/"><img class="avatar" src="https://violarulan.github.io/img/profile.png" srcset="https://violarulan.github.io/img/profile.png 1x,https://violarulan.github.io/img/profile-2x.png 2x,https://violarulan.github.io/img/profile-3x.png 3x,https://violarulan.github.io/img/profile-4x.png 4x"></a>
+            
+            <a href="https://violarulan.github.io/"><div class="name">Arthur Dent</div></a>
+            
+            <nav>
+                <ul>
+                    
+                        <li class="nav-blog"><a href="https://violarulan.github.io/blog/"><span>Blog</span></a></li>
+                    
+                        <li class="nav-about"><a href="https://violarulan.github.io/about/"><span>About</span></a></li>
+                    
+                        <li class="nav-links"><a href="https://violarulan.github.io/links/"><span>Links</span></a></li>
+                    
+                </ul>
+            </nav>
+        </div>
+    </div>
+</section>
+
+<section class="icons">
+    <div class="container">
+        <div class="content">
+
+        
+            <a href="//github.com/violarulan" target="_blank" rel="noopener"><img class="icon" src="https://violarulan.github.io/img/github.svg" alt="github" /></a>
+        
+
+        
+            <a href="//twitter.com/violarulan" target="_blank" rel="noopener"><img class="icon" src="https://violarulan.github.io/img/twitter.svg" alt="twitter" /></a>
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+            <a href="https://violarulan.github.io/index.xml"><img class="icon" src="https://violarulan.github.io/img/rss.svg" alt="rss" /></a>
+        
+        
+        </div>
+    </div>
+</section>
+
+
+<section class="main post non-narrow zero-top-spacing">
+    <div class="container">
+        <div class="content">
+            <div class="front-matter">
+                <div class="title-container">
+                    <div class="page-heading">
+
+    树莓派 3B 上安装 libnfc 配合 acr122u 读取 nfc
+
+</div>
+
+                    <div class="initials"><a href="https://violarulan.github.io/">ad</a></div>
+                </div>
+                <div class="meta">
+                    
+                    <div class="date" title='Mon Oct 17 2016 14:48:33 CST'>Oct 17, 2016</div>
+                    
+                    
+		    <div class="reading-time"><div class="middot"></div>已阅读了一分钟</div>
+                    
+                </div>
+            </div>
+            <div class="markdown">
+                
+
+<p><img src="https://ooo.0o0.ooo/2016/11/16/582be6aed51e3.jpg" alt="acr122u model a9" /></p>
+
+<p>ACR122U 是一个通过 USB 接口进行 13.56 MHz 频率下进行非接触式交互数据(近场通信)的模块，可以在深水宝买到，虽然据说水货很多(水货的提示灯在顶部左侧)。</p>
+
+<p>推荐在 Linux 环境下使用，驱动据说会比 Windows 下(有时会硬件假死)稳定很多。</p>
+
+<p>首先需要树莓派，在这里以官方 Raspbian Jessie 介绍。</p>
+
+<h4 id="安装-libudev-dev">安装 libudev-dev</h4>
+
+<pre><code class="language-text">sudo apt-get install libudev-dev
+</code></pre>
+
+<h4 id="安装-libusb">安装 libusb</h4>
+
+<pre><code class="language-text">sudo apt-get install libusb-dev
+</code></pre>
+
+<h4 id="编译安装-libnfc">编译安装 libnfc</h4>
+
+<pre><code class="language-text">wget https://bintray.com/artifact/download/nfc-tools/sources/libnfc-1.7.1.tar.bz2
+tar xjf libnfc-1.7.1.tar.bz2
+cd libnfc-1.7.1
+./configure –prefix=/usr –sysconfdir=/etc
+make
+sudo make install
+</code></pre>
+
+<h4 id="接下来是与其他-linux-系统有些不一样的地方-需要-blacklist-掉两个无关-mod-否则会-lock-设备造成-device-is-busy-错误">接下来是与其他 Linux 系统有些不一样的地方，需要 Blacklist 掉两个无关 mod 否则会 lock 设备造成 device is busy 错误</h4>
+
+<pre><code class="language-text">sudo nano /etc/modprobe.d/blacklist.conf
+</code></pre>
+
+<p>将下面内容加入进去</p>
+
+<pre><code class="language-text">blacklist pn533
+blacklist nfc
+</code></pre>
+
+<h4 id="保存退出">保存退出</h4>
+
+<pre><code class="language-text">sudo modprobe -r pn533 nfc
+sudo reboot
+</code></pre>
+
+<h4 id="重启后">重启后</h4>
+
+<pre><code class="language-text">sudo nfc-list
+</code></pre>
+
+<p>It works!</p>
+
+                <br>
+		<p><a href="https://violarulan.github.io/blog/">回到文章列表</a></p>
+            </div>
+            <br>
+            <div class="disqus">
+                <div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "cocoaexamplesite" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-123-45', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='//www.google-analytics.com/analytics.js'></script>
+
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/highlight.min.js"></script>
+  
+
+  <script type="text/javascript">
+    hljs.initHighlightingOnLoad();
+  </script>
+
+
+
+
+</body>
+</html>
+
