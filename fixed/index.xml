@@ -30,6 +30,15 @@ Netrvin https://131.re/
     </item>
     
     <item>
+      <title>Me</title>
+      <link>https://violarulan.github.io/me/</link>
+      <pubDate>Sat, 22 Jul 2017 21:47:59 +0800</pubDate>
+      
+      <guid>https://violarulan.github.io/me/</guid>
+      <description>Site built with Hugo. Theme cocoa.</description>
+    </item>
+    
+    <item>
       <title>colophon</title>
       <link>https://violarulan.github.io/colophon/</link>
       <pubDate>Sat, 22 Aug 2015 06:28:26 -0700</pubDate>

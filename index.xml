@@ -30,6 +30,15 @@ Netrvin https://131.re/
     </item>
     
     <item>
+      <title>Me</title>
+      <link>https://violarulan.github.io/me/</link>
+      <pubDate>Sat, 22 Jul 2017 21:47:59 +0800</pubDate>
+      
+      <guid>https://violarulan.github.io/me/</guid>
+      <description>Site built with Hugo. Theme cocoa.</description>
+    </item>
+    
+    <item>
       <title>(自译) 尼尔机械纪元：2 号 B 型的制作过程</title>
       <link>https://violarulan.github.io/blog/the-making-of-2b-nierautomata/</link>
       <pubDate>Sun, 21 May 2017 18:10:58 +0800</pubDate>
