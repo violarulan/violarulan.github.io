@@ -110,7 +110,7 @@ class Send { #region Imports [DllImport(&amp;quot;user32.dll&amp;quot;)] static 
       
       <guid>https://violarulan.github.io/blog/tesseract-training/</guid>
       <description>Tesseract 是一个著名、开源、多平台的 OCR 引擎，最初由惠普公司开发，后来由 Google 维护，现在项目托管在 Github 上。到目前为止已经支持了数十种语言（包括中文）。在我看来它最吸引人的地方是开发者可以训练出自己的语言文件用来识别。
-以自带语言库进行识别的方法不在本文范围之内.关于如何训练样本，Tesseract-OCR 官网有详细的介绍 http://code.google.com/p/tesseract-ocr/wiki/TrainingTesseract3，这里通过一个简单的例子来介绍一下如何进行样本训练。
+以自带语言库进行识别的方法不在本文范围之内.关于如何训练样本，Tesseract-OCR 官网有详细的介绍 http://code.google.com/p/tesseract-ocr/wiki/TrainingTesseract3 ，这里通过一个简单的例子来介绍一下如何进行样本训练。
 环境: Windows 10 x64, JRE 8
 训练工具 jTessBoxEditor，这个工具用来生成训练样本以及纠正监督，下载地址：http://sourceforge.net/projects/vietocr/files/jTessBoxEditor/。工具基于 Java 所以需要配置适当的运行环境。
 准备样本 准备自己的样本图像（越多越好），比如我准备了若干 B 站抽瓜子的验证码。
