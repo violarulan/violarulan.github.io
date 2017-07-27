@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="chrome=1">
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="referrer" content="no-referrer">
+<meta name="author" content="雅白">
+<meta name="description" content="换到 Hugo 作为新程序写文章，感觉省事了很多。
+书客是近一两年来增长很快的小说站，主要是宅文比较多，有时候也会看点书在上面；自己也有一个聚合了所有小说站的追书爬虫，需要接口抓书客数据。
+其实一看这前端像是线上的测试版直接发上来的，然而书客的加密是我见过的小说站做的最好难搞的
+网页版 网页版有前辈分析出来了，在 http://blog.konge.pw/archives/10/
+这里就不说了，本文主要进行的是 Android App 的逆向
+而且网页版的想更新一下让爬虫失效简直太容易了
+Android App App 使用 API 接口 http://app.hbooker.com/ 和服务器通信，但是直接抓包只能抓到这样的东西
+很显然是加密的，简单尝试下 Param 的参数也没法解密。
+于是尝试解包 Apk 分析加密算法
+解包后看是 360 加固过的，陷入江局
+ART dex 文件在 ART 模式上运行需要转换为 oat 格式，因此不管是什么壳在还原代码时都少不了要将解密后的 dex 文件利用 dex2oat 进行还原
+原代码 https://android.googlesource.com/platform/art/&#43;/kitkat-release/dex2oat/dex2oat.cc#924
+// art/dex2oat/dex2oat.cc L924 // Ensure opened dex files are writable for dex-to-dex transformations. for (const auto&amp; dex_file : dex_files) { if (!dex_file-&gt;EnableWrite()) { PLOG(ERROR) &lt;&lt; &quot;Failed to make .">
+
+<meta property="og:title" content="欢乐书客加密算法研究" />
+<meta property="og:description" content="换到 Hugo 作为新程序写文章，感觉省事了很多。
+书客是近一两年来增长很快的小说站，主要是宅文比较多，有时候也会看点书在上面；自己也有一个聚合了所有小说站的追书爬虫，需要接口抓书客数据。
+其实一看这前端像是线上的测试版直接发上来的，然而书客的加密是我见过的小说站做的最好难搞的
+网页版 网页版有前辈分析出来了，在 http://blog.konge.pw/archives/10/
+这里就不说了，本文主要进行的是 Android App 的逆向
+而且网页版的想更新一下让爬虫失效简直太容易了
+Android App App 使用 API 接口 http://app.hbooker.com/ 和服务器通信，但是直接抓包只能抓到这样的东西
+很显然是加密的，简单尝试下 Param 的参数也没法解密。
+于是尝试解包 Apk 分析加密算法
+解包后看是 360 加固过的，陷入江局
+ART dex 文件在 ART 模式上运行需要转换为 oat 格式，因此不管是什么壳在还原代码时都少不了要将解密后的 dex 文件利用 dex2oat 进行还原
+原代码 https://android.googlesource.com/platform/art/&#43;/kitkat-release/dex2oat/dex2oat.cc#924
+// art/dex2oat/dex2oat.cc L924 // Ensure opened dex files are writable for dex-to-dex transformations. for (const auto&amp; dex_file : dex_files) { if (!dex_file-&gt;EnableWrite()) { PLOG(ERROR) &lt;&lt; &quot;Failed to make ." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://violarulan.github.io/blog/hbooker-encryption/" />
+
+
+
+<meta property="article:published_time" content="2017-07-27T20:02:25&#43;08:00"/>
+<meta property="article:modified_time" content="2017-07-27T20:02:25&#43;08:00"/>
+
+
+
+
+
+
+
+
+
+
+
+
+<title>
+
+
+     欢乐书客加密算法研究 
+
+</title>
+<link rel="canonical" href="https://violarulan.github.io/blog/hbooker-encryption/">
+
+
+
+
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/styles/default.min.css">
+
+
+
+
+<link rel="stylesheet" href="https://fonts.lug.ustc.edu.cn/css?family=Open+Sans:400,700|Ubuntu+Mono:400,400i,700,700i|Raleway:500">
+
+
+
+    
+    <link rel="stylesheet" href="https://violarulan.github.io/css/reset.css?t=2017-07-27%2021%3a17%3a27.1166763%20%2b0800%20CST">
+    <link rel="stylesheet" href="https://violarulan.github.io/css/pygments.css?t=2017-07-27%2021%3a17%3a27.1166763%20%2b0800%20CST">
+    <link rel="stylesheet" href="https://violarulan.github.io/css/main.css?t=2017-07-27%2021%3a17%3a27.1166763%20%2b0800%20CST">
+    
+        <link rel="stylesheet" href="https://violarulan.github.io/css/override.css?t=2017-07-27%2021%3a17%3a27.1166763%20%2b0800%20CST">
+    
+
+
+
+
+<link rel="shortcut icon"
+
+    href="https://violarulan.github.io/img/leaf.ico"
+
+>
+
+
+
+
+</head>
+
+
+<body lang="cn">
+
+<section class="header">
+    <div class="container">
+        <div class="content">
+            
+                
+                
+                
+                
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        
+                    
+                
+                    
+                        
+                    
+                
+                    
+                        
+                    
+                
+                    
+                
+                    
+                
+                
+                <a href="https://violarulan.github.io/"><img class="avatar" src="https://violarulan.github.io/img/profile.png" srcset="https://violarulan.github.io/img/profile.png 1x,https://violarulan.github.io/img/profile-2x.png 2x,https://violarulan.github.io/img/profile-3x.png 3x,https://violarulan.github.io/img/profile-4x.png 4x"></a>
+            
+            <a href="https://violarulan.github.io/"><div class="name">雅白</div></a>
+            
+              <h3 class="self-intro">Programmer, Data Analyst and Gamer</h3>
+            
+            <nav>
+                <ul>
+                    
+                        <li class="nav-blog"><a href="https://violarulan.github.io/blog/"><span>Blog</span></a></li>
+                    
+                        <li class="nav-me"><a href="https://violarulan.github.io/me/"><span>Me</span></a></li>
+                    
+                        <li class="nav-links"><a href="https://violarulan.github.io/links/"><span>Links</span></a></li>
+                    
+                </ul>
+            </nav>
+        </div>
+    </div>
+</section>
+
+<section class="icons">
+    <div class="container">
+        <div class="content">
+
+        
+            <a href="//github.com/violarulan" target="_blank" rel="noopener"><img class="icon" src="https://violarulan.github.io/img/github.svg" alt="github" /></a>
+        
+
+        
+            <a href="//twitter.com/violarulan" target="_blank" rel="noopener"><img class="icon" src="https://violarulan.github.io/img/twitter.svg" alt="twitter" /></a>
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+            <a href="https://violarulan.github.io/index.xml"><img class="icon" src="https://violarulan.github.io/img/rss.svg" alt="rss" /></a>
+        
+        
+        </div>
+    </div>
+</section>
+
+
+<section class="main post non-narrow zero-top-spacing">
+    <div class="container">
+        <div class="content">
+            <div class="front-matter">
+                <div class="title-container">
+                    <div class="page-heading">
+
+    欢乐书客加密算法研究
+
+</div>
+
+                    <div class="initials"><a href="https://violarulan.github.io/">ad</a></div>
+                </div>
+                <div class="meta">
+                    
+                    <div class="date" title='Thu Jul 27 2017 20:02:25 CST'>Jul 27, 2017</div>
+                    
+                    
+		    <div class="reading-time"><div class="middot"></div>已阅读了 3 分钟</div>
+                    
+                </div>
+            </div>
+            <div class="markdown">
+                
+
+<p>换到 Hugo 作为新程序写文章，感觉省事了很多。</p>
+
+<p>书客是近一两年来增长很快的小说站，主要是宅文比较多，有时候也会看点书在上面；自己也有一个聚合了所有小说站的追书爬虫，需要接口抓书客数据。</p>
+
+<p>其实一看这前端像是线上的测试版直接发上来的，然而书客的加密是我见过的小说站做的最好<del>难搞</del>的</p>
+
+<h2 id="网页版">网页版</h2>
+
+<p>网页版有前辈分析出来了，在 <a href="http://blog.konge.pw/archives/10/">http://blog.konge.pw/archives/10/</a></p>
+
+<p>这里就不说了，本文主要进行的是 Android App 的逆向</p>
+
+<p>而且网页版的想更新一下让爬虫失效简直太容易了</p>
+
+<h2 id="android-app">Android App</h2>
+
+<p>App 使用 API 接口 <a href="http://app.hbooker.com/">http://app.hbooker.com/</a> 和服务器通信，但是直接抓包只能抓到这样的东西</p>
+
+<p><img src="https://i.loli.net/2017/07/27/5979da2b57288.jpg" alt="Encrypted Traffic" /></p>
+
+<p>很显然是加密的，简单尝试下 Param 的参数也没法解密。</p>
+
+<p>于是尝试解包 Apk 分析加密算法</p>
+
+<p>解包后看是 360 加固过的，陷入江局</p>
+
+<h4 id="art">ART</h4>
+
+<p>dex 文件在 ART 模式上运行需要转换为 oat 格式，因此不管是什么壳在还原代码时都少不了要将解密后的 dex 文件利用 dex2oat 进行还原</p>
+
+<p>原代码
+<a href="https://android.googlesource.com/platform/art/+/kitkat-release/dex2oat/dex2oat.cc#924">https://android.googlesource.com/platform/art/+/kitkat-release/dex2oat/dex2oat.cc#924</a></p>
+
+<pre><code class="language-cpp">// art/dex2oat/dex2oat.cc L924
+// Ensure opened dex files are writable for dex-to-dex transformations.
+    for (const auto&amp; dex_file : dex_files) {
+      if (!dex_file-&gt;EnableWrite()) {
+        PLOG(ERROR) &lt;&lt; &quot;Failed to make .dex file writeable '&quot; &lt;&lt; dex_file-&gt;GetLocation() &lt;&lt; &quot;'\n&quot;;
+      }
+    }
+</code></pre>
+
+<p>改写成这样</p>
+
+<pre><code class="language-cpp">// art/dex2oat/dex2oat.cc L924
+// Ensure opened dex files are writable for dex-to-dex transformations.
+    for (const auto&amp; dex_file : dex_files) {
+      if (!dex_file-&gt;EnableWrite()) {
+        PLOG(ERROR) &lt;&lt; &quot;Failed to make .dex file writeable '&quot; &lt;&lt; dex_file-&gt;GetLocation() &lt;&lt; &quot;'\n&quot;;
+      }
+      // begin 360 jiagu dump
+      std::string dex_name = dex_file-&gt;GetLocation();
+      LOG(INFO) &lt;&lt; &quot;harvey:dex file name--&gt;&quot; &lt;&lt; dex_name;
+      if(dex_name.find(&quot;.jiagu&quot;)!=std::string::npos){
+        int len = dex_file-&gt;Size();
+        char filename[150] = {0};
+        sprintf(filename,&quot;%s_%d.dex&quot;,dex_name.c_str(),len);
+        int fd = open(filename,O_WRONLY | O_CREAT | O_TRUNC, S_IRWXU);
+        if(fd&gt;0){
+          if(write(fd,(char*)dex_file-&gt;Begin(),len)&lt;=0){
+            LOG(INFO) &lt;&lt; &quot;harvey:write target dex file failed--&gt;&quot; &lt;&lt; filename;
+          }
+          LOG(INFO) &lt;&lt; &quot;harvey:write target dex file successfully--&gt;&quot; &lt;&lt; filename;
+          close(fd;)
+        }else{
+          LOG(INFO) &lt;&lt; &quot;harvey:open target dex file failed--&gt;&quot; &lt;&lt; filename;
+        }
+      }
+      // end
+    }
+</code></pre>
+
+<p>因为 360 存在 <code>.jiagu</code> 目录下，我们可以使用 <code>.jiagu</code> 进行过滤，如果是 360 加固，则将未还原成 oat 的 classes.dex 写到 app 目录的 <code>.jiagu</code> 文件夹内</p>
+
+<p>编译创建虚拟机，安装运行书客 app，成功解包</p>
+
+<p><img src="https://i.loli.net/2017/07/27/5979e157d8baf.png" alt="Dex File" /></p>
+
+<h4 id="dex2jar">dex2jar</h4>
+
+<p>有了 dex 就方便了，老生常谈使用 dex2jar 还原成 jar</p>
+
+<h4 id="jd-gui">jd-gui</h4>
+
+<p>使用 jd-gui 反编译 jar 为 java 代码</p>
+
+<p><img src="https://i.loli.net/2017/07/27/5979e22ac2c10.jpg" alt="Decompiled" /></p>
+
+<p>有很多无关代码，我们只关心 <code>com.kuangxiang.novel</code></p>
+
+<p>搜索 <code>javax.crypto</code> 发现在 <code>utils/ParseKsy.class</code> 中进行了 AES 加密</p>
+
+<p><img src="https://i.loli.net/2017/07/27/5979e2d480d97.jpg" alt="ParseKsy.class" /></p>
+
+<p>观察相关调用方法</p>
+
+<p><img src="https://i.loli.net/2017/07/27/5979e316dcddf.jpg" alt="Ref" /></p>
+
+<p>得知先实例化 <code>ParseKsy</code> 然后调用 <code>decrypt()</code> 方法</p>
+
+<p><code>ParseKsy</code> 如下</p>
+
+<p><img src="https://i.loli.net/2017/07/27/5979e3d067c88.jpg" alt="ParseKsy" /></p>
+
+<p><code>decrypt</code> 如下，使用 Base64 解码，然后 cipher 解密</p>
+
+<p><img src="https://i.loli.net/2017/07/27/5979e36f79f91.jpg" alt="decrypt" /></p>
+
+<p>阅读代码，使用 AES 加密，模式为 CBC，使用 PKCS7 作为填充算法，IV 为长度 16 的 0x00 Byte Array</p>
+
+<p><img src="https://i.loli.net/2017/07/27/5979e43b77aee.jpg" alt="IV" /></p>
+
+<h6 id="密钥算法">密钥算法</h6>
+
+<p>阅读上面实例化 <code>ParseKsy</code> 的代码，密钥为 sha256(<code>zG2nSeEfSHfvTCHy5LCcqtBbQehKNLXn</code>) 结果取前 32 位</p>
+
+<h3 id="其它">其它</h3>
+
+<p>经过测试，书客本地存储的 txt 小说文件也可通过此方法解密</p>
+
+<h3 id="测试代码">测试代码</h3>
+
+<p>以下代码在 Windows 10, Go v1.8.1 x86_64 下通过</p>
+
+<pre><code class="language-golang">package main
+
+import (
+	&quot;fmt&quot;
+	&quot;crypto/aes&quot;
+	&quot;crypto/cipher&quot;
+	&quot;encoding/base64&quot;
+	&quot;crypto/sha256&quot;
+)
+const (
+	Encrypt_Key = &quot;zG2nSeEfSHfvTCHy5LCcqtBbQehKNLXn&quot;
+)
+
+var (
+	IV = []byte{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+	test = &quot;c1SR02T7X+xmq37zfs0U8NAj73eedAs3tnXMQKDNUPlI2vcaNRXpKA3JktMoffp3EYPCsvCjzeCJUynjDISbNP4D5HjaCp6tMrOsBBfQzVI=&quot;
+)
+
+func SHA256(data []byte) []byte {
+	ret := sha256.Sum256(data)
+	return ret[:]
+}
+
+func Base64Decode(encoded string) ([]byte, error) {
+	decoded, err := base64.StdEncoding.DecodeString(encoded)
+	if err != nil {
+		return decoded, err
+	}
+	return decoded, nil
+}
+
+func LoadKey() []byte {
+	Key := SHA256([]byte(Encrypt_Key))
+	return Key[:32]
+}
+
+func AESDecrypt(ciphertext []byte) ([]byte, error) {
+	key := LoadKey()
+	block, err := aes.NewCipher(key)
+	if err != nil {
+		return nil, err
+	}
+	// Generally use first 16 bytes cipher text as IV
+	// in this case they use 16 bytes 0x00
+	blockModel := cipher.NewCBCDecrypter(block, IV)
+	plantText := make([]byte, len(ciphertext))
+	blockModel.CryptBlocks(plantText, ciphertext)
+	plantText = PKCS7UnPadding(plantText)
+	return plantText, nil
+}
+
+func PKCS7UnPadding(plantText []byte) []byte {
+	length := len(plantText)
+	unpadding := int(plantText[length-1])
+	return plantText[:(length - unpadding)]
+}
+
+func main(){
+	decoded, err := Base64Decode(test)
+	if err != nil {
+		panic(err)
+	}
+	raw, err := AESDecrypt(decoded)
+	if err != nil {
+		panic(err)
+	}
+	fmt.Println(&quot;raw byte&quot;, raw)
+	fmt.Println(&quot;string()&quot;, string(raw))
+}
+</code></pre>
+
+<p><img src="https://i.loli.net/2017/07/27/5979e799042ce.jpg" alt="result" /></p>
+
+                <br>
+		<p><a href="https://violarulan.github.io/blog/">回到文章列表</a></p>
+            </div>
+            <br>
+            <div class="disqus">
+                <div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "violarulan-github-io" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-86908353-1', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='//www.google-analytics.com/analytics.js'></script>
+
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/highlight.min.js"></script>
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/languages/go.min.js"></script>
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/languages/batchfile.min.js"></script>
+  
+
+  <script type="text/javascript">
+    hljs.initHighlightingOnLoad();
+  </script>
+
+
+
+
+</body>
+</html>
+

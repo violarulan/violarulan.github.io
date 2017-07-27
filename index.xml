@@ -6,10 +6,31 @@
     <description>Recent content on 如岚</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
-    <lastBuildDate>Sat, 22 Jul 2017 20:29:37 -0700</lastBuildDate>
+    <lastBuildDate>Thu, 27 Jul 2017 20:02:25 +0800</lastBuildDate>
     
 	<atom:link href="https://violarulan.github.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>欢乐书客加密算法研究</title>
+      <link>https://violarulan.github.io/blog/hbooker-encryption/</link>
+      <pubDate>Thu, 27 Jul 2017 20:02:25 +0800</pubDate>
+      
+      <guid>https://violarulan.github.io/blog/hbooker-encryption/</guid>
+      <description>换到 Hugo 作为新程序写文章，感觉省事了很多。
+书客是近一两年来增长很快的小说站，主要是宅文比较多，有时候也会看点书在上面；自己也有一个聚合了所有小说站的追书爬虫，需要接口抓书客数据。
+其实一看这前端像是线上的测试版直接发上来的，然而书客的加密是我见过的小说站做的最好难搞的
+网页版 网页版有前辈分析出来了，在 http://blog.konge.pw/archives/10/
+这里就不说了，本文主要进行的是 Android App 的逆向
+而且网页版的想更新一下让爬虫失效简直太容易了
+Android App App 使用 API 接口 http://app.hbooker.com/ 和服务器通信，但是直接抓包只能抓到这样的东西
+很显然是加密的，简单尝试下 Param 的参数也没法解密。
+于是尝试解包 Apk 分析加密算法
+解包后看是 360 加固过的，陷入江局
+ART dex 文件在 ART 模式上运行需要转换为 oat 格式，因此不管是什么壳在还原代码时都少不了要将解密后的 dex 文件利用 dex2oat 进行还原
+原代码 https://android.googlesource.com/platform/art/+/kitkat-release/dex2oat/dex2oat.cc#924
+// art/dex2oat/dex2oat.cc L924 // Ensure opened dex files are writable for dex-to-dex transformations. for (const auto&amp;amp; dex_file : dex_files) { if (!dex_file-&amp;gt;EnableWrite()) { PLOG(ERROR) &amp;lt;&amp;lt; &amp;quot;Failed to make .</description>
+    </item>
     
     <item>
       <title>Links</title>
