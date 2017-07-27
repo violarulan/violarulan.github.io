@@ -27,6 +27,7 @@ Android App App 使用 API 接口 http://app.hbooker.com/ 和服务器通信，�
 很显然是加密的，简单尝试下 Param 的参数也没法解密。
 于是尝试解包 Apk 分析加密算法
 解包后看是 360 加固过的，陷入江局
+直到我注意到了
 ART dex 文件在 ART 模式上运行需要转换为 oat 格式，因此不管是什么壳在还原代码时都少不了要将解密后的 dex 文件利用 dex2oat 进行还原
 原代码 https://android.googlesource.com/platform/art/+/kitkat-release/dex2oat/dex2oat.cc#924
 // art/dex2oat/dex2oat.cc L924 // Ensure opened dex files are writable for dex-to-dex transformations. for (const auto&amp;amp; dex_file : dex_files) { if (!dex_file-&amp;gt;EnableWrite()) { PLOG(ERROR) &amp;lt;&amp;lt; &amp;quot;Failed to make .</description>
