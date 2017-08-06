@@ -24,7 +24,7 @@ ART dex 文件在 ART 模式上运行需要转换为 oat 格式，因此不管�
 原代码 https://android.googlesource.com/platform/art/&#43;/kitkat-release/dex2oat/dex2oat.cc#924
 // art/dex2oat/dex2oat.cc L924 // Ensure opened dex files are writable for dex-to-dex transformations. for (const auto&amp; dex_file : dex_files) { if (!">
 
-<meta property="og:title" content="欢乐书客加密算法研究" />
+<meta property="og:title" content="欢乐书客加密算法及 360 加固脱壳方式研究" />
 <meta property="og:description" content="换到 Hugo 作为新程序写文章，感觉省事了很多。
 书客是近一两年来增长很快的小说站，主要是宅文比较多，有时候也会看点书在上面；自己也有一个聚合了所有小说站的追书爬虫，需要接口抓书客数据。
 其实一看这前端像是线上的测试版直接发上来的，然而书客的加密是我见过的小说站做的最好难搞的
@@ -40,7 +40,7 @@ ART dex 文件在 ART 模式上运行需要转换为 oat 格式，因此不管�
 原代码 https://android.googlesource.com/platform/art/&#43;/kitkat-release/dex2oat/dex2oat.cc#924
 // art/dex2oat/dex2oat.cc L924 // Ensure opened dex files are writable for dex-to-dex transformations. for (const auto&amp; dex_file : dex_files) { if (!" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://violarulan.github.io/blog/hbooker-encryption/" />
+<meta property="og:url" content="https://violarulan.github.io/blog/hbooker-encryption-360-jiagu-reverse-engineering/" />
 
 
 
@@ -61,10 +61,10 @@ ART dex 文件在 ART 模式上运行需要转换为 oat 格式，因此不管�
 <title>
 
 
-     欢乐书客加密算法研究 
+     欢乐书客加密算法及 360 加固脱壳方式研究 
 
 </title>
-<link rel="canonical" href="https://violarulan.github.io/blog/hbooker-encryption/">
+<link rel="canonical" href="https://violarulan.github.io/blog/hbooker-encryption-360-jiagu-reverse-engineering/">
 
 
 
@@ -82,11 +82,11 @@ ART dex 文件在 ART 模式上运行需要转换为 oat 格式，因此不管�
 
 
     
-    <link rel="stylesheet" href="https://violarulan.github.io/css/reset.css?t=2017-07-27%2021%3a42%3a46.3218315%20%2b0800%20CST">
-    <link rel="stylesheet" href="https://violarulan.github.io/css/pygments.css?t=2017-07-27%2021%3a42%3a46.3218315%20%2b0800%20CST">
-    <link rel="stylesheet" href="https://violarulan.github.io/css/main.css?t=2017-07-27%2021%3a42%3a46.3218315%20%2b0800%20CST">
+    <link rel="stylesheet" href="https://violarulan.github.io/css/reset.css?t=2017-08-06%2012%3a27%3a07.8877256%20%2b0800%20CST">
+    <link rel="stylesheet" href="https://violarulan.github.io/css/pygments.css?t=2017-08-06%2012%3a27%3a07.8877256%20%2b0800%20CST">
+    <link rel="stylesheet" href="https://violarulan.github.io/css/main.css?t=2017-08-06%2012%3a27%3a07.8877256%20%2b0800%20CST">
     
-        <link rel="stylesheet" href="https://violarulan.github.io/css/override.css?t=2017-07-27%2021%3a42%3a46.3218315%20%2b0800%20CST">
+        <link rel="stylesheet" href="https://violarulan.github.io/css/override.css?t=2017-08-06%2012%3a27%3a07.8877256%20%2b0800%20CST">
     
 
 
@@ -199,7 +199,7 @@ ART dex 文件在 ART 模式上运行需要转换为 oat 格式，因此不管�
                 <div class="title-container">
                     <div class="page-heading">
 
-    欢乐书客加密算法研究
+    欢乐书客加密算法及 360 加固脱壳方式研究
 
 </div>
 
