@@ -1,3 +1,4 @@
+@font-face{font-family:'Noto Sans SC';font-style:normal;font-weight:100;src:url(https://fonts-gstatic.proxy.ustclug.org/ea/notosanssc/v1/NotoSansSC-Thin.woff2) format('woff2'),url(https://fonts-gstatic.proxy.ustclug.org/ea/notosanssc/v1/NotoSansSC-Thin.woff) format('woff'),url(https://fonts-gstatic.proxy.ustclug.org/ea/notosanssc/v1/NotoSansSC-Thin.otf) format('opentype')}@font-face{font-family:'Noto Sans SC';font-style:normal;font-weight:300;src:url(https://fonts-gstatic.proxy.ustclug.org/ea/notosanssc/v1/NotoSansSC-Light.woff2) format('woff2'),url(https://fonts-gstatic.proxy.ustclug.org/ea/notosanssc/v1/NotoSansSC-Light.woff) format('woff'),url(https://fonts-gstatic.proxy.ustclug.org/ea/notosanssc/v1/NotoSansSC-Light.otf) format('opentype')}@font-face{font-family:'Noto Sans SC';font-style:normal;font-weight:400;src:url(https://fonts-gstatic.proxy.ustclug.org/ea/notosanssc/v1/NotoSansSC-Regular.woff2) format('woff2'),url(https://fonts-gstatic.proxy.ustclug.org/ea/notosanssc/v1/NotoSansSC-Regular.woff) format('woff'),url(https://fonts-gstatic.proxy.ustclug.org/ea/notosanssc/v1/NotoSansSC-Regular.otf) format('opentype')}@font-face{font-family:'Noto Sans SC';font-style:normal;font-weight:500;src:url(https://fonts-gstatic.proxy.ustclug.org/ea/notosanssc/v1/NotoSansSC-Medium.woff2) format('woff2'),url(https://fonts-gstatic.proxy.ustclug.org/ea/notosanssc/v1/NotoSansSC-Medium.woff) format('woff'),url(https://fonts-gstatic.proxy.ustclug.org/ea/notosanssc/v1/NotoSansSC-Medium.otf) format('opentype')}@font-face{font-family:'Noto Sans SC';font-style:normal;font-weight:700;src:url(https://fonts-gstatic.proxy.ustclug.org/ea/notosanssc/v1/NotoSansSC-Bold.woff2) format('woff2'),url(https://fonts-gstatic.proxy.ustclug.org/ea/notosanssc/v1/NotoSansSC-Bold.woff) format('woff'),url(https://fonts-gstatic.proxy.ustclug.org/ea/notosanssc/v1/NotoSansSC-Bold.otf) format('opentype')}@font-face{font-family:'Noto Sans SC';font-style:normal;font-weight:900;src:url(https://fonts-gstatic.proxy.ustclug.org/ea/notosanssc/v1/NotoSansSC-Black.woff2) format('woff2'),url(https://fonts-gstatic.proxy.ustclug.org/ea/notosanssc/v1/NotoSansSC-Black.woff) format('woff'),url(https://fonts-gstatic.proxy.ustclug.org/ea/notosanssc/v1/NotoSansSC-Black.otf) format('opentype')}
 .dark {
   color: #333 !important;
 }
@@ -56,7 +57,7 @@ body {
   width: 100%;
   min-height: 100%;
   font-weight: 400;
-  font-family: 'Open Sans', 'Helvetica Neue', 'Arial', sans-serif;
+  font-family: 'Noto Sans SC', 'Open Sans', 'Helvetica Neue', 'Arial', sans-serif;
   color: #111;
   line-height: 1.6;
   text-rendering: optimizeLegibility !important;
